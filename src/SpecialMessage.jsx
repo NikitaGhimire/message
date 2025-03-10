@@ -27,14 +27,18 @@ export default function SpecialMessage() {
   const videoId = "gte3BoXKwP0"; // Example: relaxing music video ID
 
   const opts = {
-    height: "0",
-    width: "0",
+    height: "1",
+    width: "1",
     playerVars: {
       autoplay: 0,
       controls: 0,
       disablekb: 1,
       fs: 0,
       rel: 0,
+      playsinline: 1, // Required for iOS
+      modestbranding: 1,
+      iv_load_policy: 3,
+      origin: window.location.origin
     },
   };
 
@@ -42,13 +46,33 @@ export default function SpecialMessage() {
     setPlayer(event.target);
   };
 
-  const toggleMusic = () => {
-    if (musicPlaying) {
-      player?.pauseVideo();
-    } else {
-      player?.playVideo();
+  const toggleMusic = async () => {
+    try {
+      if (!player) return;
+
+      if (!musicPlaying) {
+        // Try to load and play the video
+        await player.loadVideoById({
+          videoId: videoId,
+          startSeconds: 0,
+        });
+        
+        // Force playback attempt
+        const playPromise = player.playVideo();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            setMusicPlaying(true);
+          }).catch(error => {
+            console.error("Playback failed:", error);
+          });
+        }
+      } else {
+        await player.pauseVideo();
+        setMusicPlaying(false);
+      }
+    } catch (error) {
+      console.error("Music toggle error:", error);
     }
-    setMusicPlaying(!musicPlaying);
   };
 
   const nextSection = () => {
@@ -69,7 +93,8 @@ export default function SpecialMessage() {
         onClick={toggleMusic} 
         className="button button-music"
       >
-        {musicPlaying ? "Pause Music 🎵" : "Let's play our music, shall we? 🎵"}
+        {!player ? "Loading..." : 
+         musicPlaying ? "Pause Music 🎵" : "Let's play our music, shall we? 🎵"}
       </Button>
 
       <motion.h1
@@ -119,7 +144,13 @@ export default function SpecialMessage() {
         </>
       )}
       
-      <YouTube videoId={videoId} opts={opts} onReady={onReady} />
+      <YouTube 
+        videoId={videoId} 
+        opts={opts} 
+        onReady={onReady}
+        className="youtube-player"
+        style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+      />
     </div>
   );
 }
