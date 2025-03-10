@@ -1,0 +1,19 @@
+.heart {
+  position: fixed;
+  font-size: 20px;
+  color: pink;
+  animation: float-heart 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes float-heart {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(calc(50px * var(--direction)));
+    opacity: 0;
+  }
+}
