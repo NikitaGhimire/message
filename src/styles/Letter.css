@@ -2,7 +2,8 @@
   position: relative;
   width: 90%;
   max-width: 800px;
-  margin: 2rem auto;
+  height: calc(80vh - 200px); /* Account for title and buttons */
+  margin: 0 auto;
   min-height: 500px;
 }
 
@@ -89,8 +90,38 @@
   padding: 2rem;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  height: 100%;
+  overflow-y: auto;
   opacity: 0;
   pointer-events: none;
+}
+
+.letter-container {
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #e9d5ff transparent;
+}
+
+/* Webkit scrollbar styles */
+.letter-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.letter-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.letter-container::-webkit-scrollbar-thumb {
+  background-color: #e9d5ff;
+  border-radius: 20px;
+}
+
+.message-section {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: clamp(0.9rem, 2vw, 1.1rem); /* Responsive font size */
 }
 
 .open .envelope-front {

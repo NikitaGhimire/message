@@ -69,7 +69,7 @@ export default function SpecialMessage() {
         onClick={toggleMusic} 
         className="button button-music"
       >
-        {musicPlaying ? "Pause Music 🎵" : "Let's play some music, shall we? 🎵"}
+        {musicPlaying ? "Pause Music 🎵" : "Let's play our music, shall we? 🎵"}
       </Button>
 
       <motion.h1
@@ -78,7 +78,7 @@ export default function SpecialMessage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Dear D 💜
+        Dear D ✨
       </motion.h1>
       
       <Letter onOpen={handleLetterOpen}>
@@ -99,14 +99,14 @@ export default function SpecialMessage() {
 
       {currentSection === messageContent.length - 1 && (
         <>
-          <Button 
+          {/* <Button 
             onClick={() => setShowHidden(!showHidden)} 
             className="button button-reveal"
           >
             {showHidden ? "Close" : "🌟"}
-          </Button>
+          </Button> */}
           
-          {showHidden && (
+          {/* {showHidden && (
             <motion.p
               className="hidden-message"
               initial={{ opacity: 0, scale: 0.5 }}
@@ -115,7 +115,7 @@ export default function SpecialMessage() {
             >
               "Friendship is like a star; it shines brightest in the darkest times. Thank you for being my star!" 🌟
             </motion.p>
-          )}
+          )} */}
         </>
       )}
       
